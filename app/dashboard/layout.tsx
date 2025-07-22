@@ -1,15 +1,15 @@
 "use client";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
+import AppHeader from "@/components/AppHeader";
+import DaySelector from "@/components/DaySelector";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-      <SidebarProvider>
-        <AppSidebar />
+      <>
+        <AppHeader />
+        <DaySelector />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <SidebarTrigger />
           {children}
         </main>
-      </SidebarProvider>
+      </>
     )
   }
