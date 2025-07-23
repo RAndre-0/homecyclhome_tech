@@ -53,6 +53,10 @@ export interface Intervention {
   typeIntervention: TypeIntervention | null;
   client: Client | null;
   technicien: Technicien | null;
+  status?: "past" | "current" | "upcoming";
+  time?: string;
+  name?: string;
+  type?: string;
 }
 
 export interface ModelePlanning {
