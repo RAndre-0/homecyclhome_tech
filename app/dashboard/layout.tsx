@@ -1,6 +1,5 @@
 "use client";
 import AppHeader from "@/components/AppHeader";
-import DaySelector from "@/components/DaySelector";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (

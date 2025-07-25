@@ -54,7 +54,7 @@ export default function InterventionCard({ intervention, onClick }: Props) {
 
       <Button
         variant={status === "current" ? "default" : "secondary"}
-        className="w-full mt-3 font-medium flex items-center justify-center"
+        className="w-full mt-3 font-medium flex items-center justify-center bg-neutral-200"
         onClick={onClick}
       >
         <span>Voir les détails</span>
