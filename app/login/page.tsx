@@ -24,7 +24,8 @@ import { loginSchema } from "@/schemas/schemas";
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // État pour gérer les erreurs
-  const [cookies, setCookie] = useCookies(['token']);
+  const TOKEN_NAME = process.env.NEXT_PUBLIC_TOKEN_NAME ?? 'hch_token';
+  const [cookies, setCookie] = useCookies([TOKEN_NAME]);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -56,7 +57,12 @@ export default function Login() {
 
       const data = await response.json();
       const token = data.token;
-      setCookie('token', token, { path: '/', maxAge: 60000, secure: false, sameSite: 'strict' });
+      setCookie(TOKEN_NAME, token, {
+        path: '/',
+        maxAge: 3600, // 1 heure
+        secure: process.env.NODE_ENV === "production",
+        sameSite: 'strict'
+      });
       router.push('/');
     } catch (error) {
       console.error("Login error:", error);

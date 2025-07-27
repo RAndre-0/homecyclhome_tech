@@ -19,7 +19,7 @@ export default function AppHeader() {
                             <h2 className="text-xl font-semibold">Menu</h2>
                             <nav className="space-y-4">
                                 <Button asChild variant="outline" className="w-full justify-start">
-                                    <Link href="/dashboard">Planning</Link>
+                                    <Link href="/interventions">Planning</Link>
                                 </Button>
                                 <Button asChild variant="destructive" className="w-full justify-start">
                                     <Link href="/logout">Déconnexion</Link>

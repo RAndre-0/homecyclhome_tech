@@ -31,6 +31,7 @@ export interface Client {
   email: string | null;
   firstName: string | null;
   lastName: string | null;
+  phoneNumber: string | null;
 }
 
 export interface TypeIntervention {
@@ -53,6 +54,7 @@ export interface Intervention {
   typeIntervention: TypeIntervention | null;
   client: Client | null;
   technicien: Technicien | null;
+  finalisee: boolean;
   status?: "past" | "current" | "upcoming";
   time?: string;
   name?: string;

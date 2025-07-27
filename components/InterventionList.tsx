@@ -2,12 +2,15 @@
 
 import InterventionCard from "@/components/InterventionCard";
 import { Intervention } from "@/types/types";
+import { useRouter } from "next/navigation";
 
 type Props = {
   interventions: Intervention[];
 };
 
 export default function InterventionList({ interventions }: Props) {
+  const router = useRouter();
+
   if (interventions.length === 0) {
     return <p className="text-muted-foreground text-sm">Aucune intervention prévue.</p>;
   }
@@ -18,7 +21,7 @@ export default function InterventionList({ interventions }: Props) {
         <InterventionCard
           key={intervention.id}
           intervention={intervention}
-          onClick={() => alert(`Détails de l'intervention #${intervention.id}`)}
+          onClick={() => router.push(`/interventions/${intervention.id}`)}
         />
       ))}
     </div>
