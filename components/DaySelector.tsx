@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { format, addDays, parseISO } from "date-fns";
+import { format, addDays } from "date-fns";
 import { fr } from "date-fns/locale";
 
 type Props = {

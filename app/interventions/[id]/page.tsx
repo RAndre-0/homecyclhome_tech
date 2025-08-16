@@ -11,6 +11,17 @@ import { Phone, Mail, MapPin, Bike, User, Clock, ChevronLeft, ClipboardCheck } f
 import Link from "next/link";
 import ZoomableImage from "@/components/ZoomableImage";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 export default function InterventionDetailPage() {
   const { id } = useParams();
@@ -24,7 +35,7 @@ export default function InterventionDetailPage() {
       try {
         const data = await apiService(`interventions/${id}`, "GET");
         setIntervention(data);
-      } catch (err) {
+      } catch {
         setError("Erreur lors du chargement de l'intervention.");
       }
     };
@@ -44,13 +55,13 @@ export default function InterventionDetailPage() {
     if (!intervention) return;
     setLoading(true);
     try {
-      await apiService(`interventions/${intervention.id}/valider`, "POST", {
+      await apiService(`interventions/${intervention.id}/validate`, "POST", {
         commentaire_technicien: comment
       });
-      // On peut envisager une redirection ou une mise à jour UI ici
-      alert("Intervention validée avec succès.");
-    } catch (err) {
-      alert("Erreur lors de la validation.");
+      toast.success("Intervention complétée avec succès.");
+      setIntervention({ ...intervention, finalisee: true, commentaireTechnicien: comment });
+    } catch {
+      toast.error("La validation a échoué. Veuillez réessayer.");
     } finally {
       setLoading(false);
     }
@@ -67,7 +78,7 @@ export default function InterventionDetailPage() {
             <ChevronLeft className="w-5 h-5" />
           </Button>
         </Link>
-        <h2 className="text-xl font-semibold">Détail de l'intervention</h2>
+        <h2 className="text-xl font-semibold">Détail de l&apos;intervention</h2>
       </div>
 
       <Card>
@@ -78,7 +89,7 @@ export default function InterventionDetailPage() {
             </CardTitle>
             <p className="text-sm text-muted-foreground">{intervention.typeIntervention?.nom}</p>
           </div>
-          <Badge variant="default">Prévue</Badge>
+          <Badge variant={intervention.finalisee ? "secondary" : "default"}>{intervention.finalisee ? "Complétée" : "Prévue"}</Badge>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center text-sm text-muted-foreground">
@@ -176,19 +187,40 @@ export default function InterventionDetailPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ClipboardCheck className="h-5 w-5 text-muted-foreground" />
-            Finaliser
+            {intervention.finalisee ? "Intervention validée" : "Finaliser"}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
-          <Textarea
-            placeholder="Ajouter un commentaire (optionnel)"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            className="min-h-[120px] resize-y"
-          />
-          <Button onClick={handleValidation} disabled={loading} className="w-full">
-            Valider l'intervention
-          </Button>
+          {intervention.finalisee ? (
+            intervention.commentaireTechnicien && (
+              <p className="text-sm text-muted-foreground">{intervention.commentaireTechnicien}</p>
+            )
+          ) : (
+            <>
+              <Textarea
+                placeholder="Ajouter un commentaire (optionnel)"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="min-h-[120px] resize-y"
+              />
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button className="w-full" disabled={loading}>
+                    Valider l&apos;intervention
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Confirmer la validation ?</AlertDialogTitle>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Annuler</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleValidation}>Valider</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

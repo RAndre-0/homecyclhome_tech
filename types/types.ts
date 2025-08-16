@@ -45,6 +45,7 @@ export interface Intervention {
   debut: string;
   fin: string | null;
   commentaireClient: string | null;
+  commentaireTechnicien: string | null;
   photo: string | null;
   veloCategorie: string | null;
   veloElectrique: boolean | null;

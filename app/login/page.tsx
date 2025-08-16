@@ -25,7 +25,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // État pour gérer les erreurs
   const TOKEN_NAME = process.env.NEXT_PUBLIC_TOKEN_NAME ?? 'hch_token';
-  const [cookies, setCookie] = useCookies([TOKEN_NAME]);
+  const [, setCookie] = useCookies([TOKEN_NAME]);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof loginSchema>>({

@@ -1,12 +1,8 @@
 "use client";
 
 import AppHeader from "@/components/AppHeader";
-import DaySelector from "@/components/DaySelector";
-import { useState } from "react";
-import { format } from "date-fns";
 
 export default function InterventionsLayout({ children }: { children: React.ReactNode }) {
-  const [selectedDate, setSelectedDate] = useState(() => format(new Date(), "yyyy-MM-dd"));
 
   return (
     <>
