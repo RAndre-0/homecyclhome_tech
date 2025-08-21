@@ -4,10 +4,6 @@ on:
   push:
     branches: [ "main" ]
 
-concurrency:
-  group: deploy-tech-test
-  cancel-in-progress: false
-
 jobs:
   deploy-test:
     name: Build on VPS & restart (TEST)
