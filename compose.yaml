@@ -17,6 +17,6 @@ services:
       NEXT_PUBLIC_TOKEN_NAME: ${NEXT_PUBLIC_TOKEN_NAME}
       LOG_LEVEL: ${LOG_LEVEL:-info}
       NEXT_TELEMETRY_DISABLED: ${NEXT_TELEMETRY_DISABLED:-1}
-      ports:
-        - "127.0.0.1:${TECH_PORT:-3002}:3000"
+    ports:
+      - "127.0.0.1:${TECH_PORT:-3002}:3000"
     restart: unless-stopped
